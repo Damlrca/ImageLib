@@ -1,5 +1,4 @@
 #include "Image.h"
-#include "ImagePlus.h"
 
 #include <gtest.h>
 
@@ -47,13 +46,13 @@ TEST(test_Image, resize_test) {
 	EXPECT_EQ(72, a.width());
 }
 
-TEST(test_ImagePlus, TXT_test) {
-	ImagePlus a(23, 16);
+TEST(test_ImageFiles, TXT_test) {
+	Image a(23, 16);
 	for (int i = 0; i < 23; i++)
 		for (int j = 0; j < 16; j++)
 			a.pixel(i, j) = rand() % 256;
 	a.fsaveTXT("TXT_test.txt");
-	ImagePlus b;
+	Image b;
 	b.floadTXT("TXT_test.txt");
 	ASSERT_EQ(a.height(), b.height());
 	ASSERT_EQ(a.width(), b.width());
@@ -62,13 +61,13 @@ TEST(test_ImagePlus, TXT_test) {
 			ASSERT_EQ(a.pixel(i, j), b.pixel(i, j));
 }
 
-TEST(test_ImagePlus, BIN_test) {
-	ImagePlus a(23, 16);
+TEST(test_ImageFiles, BIN_test) {
+	Image a(23, 16);
 	for (int i = 0; i < 23; i++)
 		for (int j = 0; j < 16; j++)
 			a.pixel(i, j) = rand() % 256;
 	a.fsaveBIN("BIN_test.bin");
-	ImagePlus b;
+	Image b;
 	b.floadBIN("BIN_test.bin");
 	ASSERT_EQ(a.height(), b.height());
 	ASSERT_EQ(a.width(), b.width());

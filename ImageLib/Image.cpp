@@ -1,3 +1,4 @@
+#include <fstream>
 #include "Image.h"
 
 unsigned char** Image::img_alloc(int h, int w) {
@@ -149,4 +150,40 @@ istream& operator>>(istream& in, Image& img) {
 				img.arr[i][j] = static_cast<unsigned char>(temp);
 			}
 	return in;
+}
+
+void Image::fsaveBIN(const char* name) {
+	ofstream fout(name, ios_base::binary);
+	fout.write(reinterpret_cast<const char*>(&h), sizeof(int));
+	fout.write(reinterpret_cast<const char*>(&w), sizeof(int));
+	if (arr)
+		fout.write(reinterpret_cast<const char*>(arr[0]), sizeof(unsigned char) * h * w);
+	fout.close();
+}
+
+void Image::floadBIN(const char* name) {
+	ifstream fin(name, ios_base::binary);
+	int _h, _w;
+	fin.read(reinterpret_cast<char*>(&_h), sizeof(int));
+	fin.read(reinterpret_cast<char*>(&_w), sizeof(int));
+	resize(_h, _w);
+	if (arr)
+		fin.read(reinterpret_cast<char*>(arr[0]), sizeof(unsigned char) * h * w);
+	fin.close();
+}
+
+void Image::fsaveTXT(const char* name) {
+	ofstream fout(name);
+	fout << h << " " << w << "\n";
+	fout << *this;
+	fout.close();
+}
+
+void Image::floadTXT(const char* name) {
+	ifstream fin(name);
+	int _h, _w;
+	fin >> _h >> _w;
+	resize(_h, _w);
+	fin >> *this;
+	fin.close();
 }

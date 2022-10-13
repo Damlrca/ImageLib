@@ -36,4 +36,9 @@ public:
 
 	friend ostream& operator<<(ostream& out, const Image& img);
 	friend istream& operator>>(istream& in, Image& img);
+
+	void fsaveBIN(const char* name);
+	void floadBIN(const char* name);
+	void fsaveTXT(const char* name);
+	void floadTXT(const char* name);
 };
