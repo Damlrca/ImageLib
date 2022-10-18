@@ -1,6 +1,8 @@
-#include "Image.h"
+#include "ImageLib.h"
 
 #include <gtest.h>
+
+using namespace ImageLib;
 
 TEST(test_Image, size_test) {
 	Image temp(3, 21);
@@ -18,25 +20,25 @@ TEST(test_Image, copy_constructor_test) {
 	Image a(20, 40);
 	for (int i = 0; i < 20; i++)
 		for (int j = 0; j < 40; j++)
-			a.pixel(i, j) = rand() % 256;
+			a.px(i, j) = rand() % 256;
 
 	Image b = a;
 
 	for (int i = 0; i < 20; i++)
 		for (int j = 0; j < 40; j++)
-			ASSERT_EQ(a.pixel(i, j), b.pixel(i, j));
+			ASSERT_EQ(a.px(i, j), b.px(i, j));
 }
 
 TEST(test_Image, upscale_test) {
 	Image a(21, 43);
 	for (int i = 0; i < 21; i++)
 		for (int j = 0; j < 43; j++)
-			a.pixel(i, j) = rand() % 256;
+			a.px(i, j) = rand() % 256;
 
 	Image b = a;
 	b.upscale();
 
-	EXPECT_EQ(b.pixel(5, 7), ((a.pixel(2, 3) + a.pixel(2, 4)) / 2 + (a.pixel(3, 3) + a.pixel(3, 4)) / 2) / 2);
+	EXPECT_EQ(b.px(5, 7), ((a.px(2, 3) + a.px(2, 4)) / 2 + (a.px(3, 3) + a.px(3, 4)) / 2) / 2);
 }
 
 TEST(test_Image, resize_test) {
@@ -50,7 +52,7 @@ TEST(test_ImageFiles, TXT_test) {
 	Image a(23, 16);
 	for (int i = 0; i < 23; i++)
 		for (int j = 0; j < 16; j++)
-			a.pixel(i, j) = rand() % 256;
+			a.px(i, j) = rand() % 256;
 	a.fsaveTXT("TXT_test.txt");
 	Image b;
 	b.floadTXT("TXT_test.txt");
@@ -58,14 +60,14 @@ TEST(test_ImageFiles, TXT_test) {
 	ASSERT_EQ(a.width(), b.width());
 	for (int i = 0; i < 23; i++)
 		for (int j = 0; j < 16; j++)
-			ASSERT_EQ(a.pixel(i, j), b.pixel(i, j));
+			ASSERT_EQ(a.px(i, j), b.px(i, j));
 }
 
 TEST(test_ImageFiles, BIN_test) {
 	Image a(23, 16);
 	for (int i = 0; i < 23; i++)
 		for (int j = 0; j < 16; j++)
-			a.pixel(i, j) = rand() % 256;
+			a.px(i, j) = rand() % 256;
 	a.fsaveBIN("BIN_test.bin");
 	Image b;
 	b.floadBIN("BIN_test.bin");
@@ -73,5 +75,5 @@ TEST(test_ImageFiles, BIN_test) {
 	ASSERT_EQ(a.width(), b.width());
 	for (int i = 0; i < 23; i++)
 		for (int j = 0; j < 16; j++)
-			ASSERT_EQ(a.pixel(i, j), b.pixel(i, j));
+			ASSERT_EQ(a.px(i, j), b.px(i, j));
 }

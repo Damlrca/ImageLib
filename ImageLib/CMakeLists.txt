@@ -1,1 +1,1 @@
-add_library(ImageLib STATIC Image.h Image.cpp)
+add_library(ImageLib STATIC ImageLib.h ImageLib.cpp)
