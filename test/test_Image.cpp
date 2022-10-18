@@ -29,18 +29,6 @@ TEST(test_Image, copy_constructor_test) {
 			ASSERT_EQ(a.px(i, j), b.px(i, j));
 }
 
-TEST(test_Image, upscale_test) {
-	Image a(21, 43);
-	for (int i = 0; i < 21; i++)
-		for (int j = 0; j < 43; j++)
-			a.px(i, j) = rand() % 256;
-
-	Image b = a;
-	b.upscale();
-
-	EXPECT_EQ(b.px(5, 7), ((a.px(2, 3) + a.px(2, 4)) / 2 + (a.px(3, 3) + a.px(3, 4)) / 2) / 2);
-}
-
 TEST(test_Image, resize_test) {
 	Image a(23, 48);
 	a.resize(54, 72);

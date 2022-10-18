@@ -84,30 +84,6 @@ Image& Image::operator=(Image&& img) noexcept {
 	return *this;
 }
 
-void Image::upscale() {
-	if (h == 0 || w == 0)
-		return;
-
-	unsigned char** temp_arr = img_alloc(h + h, w + w);
-
-	for (int i = 0; i < h; i++)
-		for (int j = 0; j < w; j++)
-			temp_arr[i + i][j + j] = arr[i][j];
-	
-	img_delete(arr);
-	arr = temp_arr;
-	h += h;
-	w += w;
-
-	// integral promotion !
-	for (int i = 0; i < h; i += 2)
-		for (int j = 1; j < w; j += 2)
-			temp_arr[i][j] = j + 1 < w ? (temp_arr[i][j - 1] + temp_arr[i][j + 1]) / 2 : temp_arr[i][j - 1];
-	for (int i = 1; i < h; i += 2)
-		for (int j = 0; j < w; j++)
-			temp_arr[i][j] = i + 1 < h ? (temp_arr[i - 1][j] + temp_arr[i + 1][j]) / 2 : temp_arr[i - 1][j];
-}
-
 void Image::resize(size_t _h, size_t _w) {
 	unsigned char** temp_arr = img_alloc(_h, _w);
 	img_delete(arr);
@@ -143,7 +119,7 @@ istream& ImageLib::operator>>(istream& in, Image& img) {
 	return in;
 }
 
-void Image::fsaveBIN(const char* name) {
+void Image::fsaveBIN(const char* name) const {
 	ofstream fout(name, ios_base::binary);
 	fout.write(reinterpret_cast<const char*>(&h), sizeof(int));
 	fout.write(reinterpret_cast<const char*>(&w), sizeof(int));
@@ -163,7 +139,7 @@ void Image::floadBIN(const char* name) {
 	fin.close();
 }
 
-void Image::fsaveTXT(const char* name) {
+void Image::fsaveTXT(const char* name) const {
 	ofstream fout(name);
 	fout << h << " " << w << "\n";
 	fout << *this;
