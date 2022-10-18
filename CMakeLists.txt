@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 
-project(ImageSolution)
+project(ImageSln)
 
 add_subdirectory(main)
 add_subdirectory(test)
