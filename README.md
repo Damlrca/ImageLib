@@ -43,7 +43,7 @@ name.txt:
   225 108 214 174
    82 144  73 241
 ```
-- `fsaveBIN(*name*)/floadBIN(*name*)` - saves/loads Image in/from *name* file, as bin file.  
+- `fsaveBIN(name)/floadBIN(name)` - saves/loads Image in/from *name* file, as bin file.  
 name.bin:
 ```
   03000000  04000000
