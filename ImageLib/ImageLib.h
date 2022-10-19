@@ -47,7 +47,6 @@ namespace ImageLib {
 			return arr[_h][_w];
 		}
 
-		void upscale();
 		void resize(size_t _h, size_t _w);
 
 		~Image();
@@ -55,9 +54,9 @@ namespace ImageLib {
 		friend std::ostream& operator<<(std::ostream& out, const Image& img);
 		friend std::istream& operator>>(std::istream& in, Image& img);
 
-		void fsaveBIN(const char* name);
+		void fsaveBIN(const char* name) const;
 		void floadBIN(const char* name);
-		void fsaveTXT(const char* name);
+		void fsaveTXT(const char* name) const;
 		void floadTXT(const char* name);
 	};
 
